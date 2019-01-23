@@ -22,7 +22,7 @@ applyConstraintsButton.addEventListener('click', trackApplyConstraints);
 overApplyConstraintsButton.addEventListener('click', overApplyConstraints);
 
 
-function trackApplyConstraints() {z
+function trackApplyConstraints() {
     let constraints = {
         frameRate: { max: 15, ideal: 15 },
         aspectRatio: { min: 1.777, max: 1.778},
