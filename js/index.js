@@ -40,7 +40,7 @@ function trackApplyConstraints() {
     console.warn("applyConstraints: ", constraints)
     let track = localStream.getVideoTracks()[0];
     track.applyConstraints(constraints).then(function () {
-        console.log('success')
+        console.log('applyConstraints success')
     }).catch(function (error) {
         console.error(error)
     });
