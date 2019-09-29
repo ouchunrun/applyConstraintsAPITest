@@ -63,16 +63,15 @@ function trackApplyConstraints() {
 function overApplyConstraints() {
     let constraints = {
         frameRate: { exact: 30, min: 15 },
-        aspectRatio: { min: 1.777, max: 1.778},
         width: {
             min: 0,
             exact: 3840,
-            max: 1920,
+            max: 3840,
         },
         height: {
             min: 0,
             exact: 2160,
-            max: 1080,
+            max: 2160,
         }
     }
     console.warn("overApplyConstraints \n" + JSON.stringify(constraints, null, '    ') );

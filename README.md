@@ -458,5 +458,8 @@ OverconstrainedError
 
 
 
-
+注：
+1、所有浏览器，如果只是用min和max，分辨率不一定改变，改变也不一定是理想值
+2、使用exact如果超出设备能力范围时，不去使用其他分辨率，会直接报错
+3、applyConstraints success ，流的分辨率也不一定改变了，因为可能不满足aspectRatio比例要求
 
