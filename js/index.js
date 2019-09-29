@@ -21,26 +21,40 @@ hangupButton.addEventListener('click', hangup);
 applyConstraintsButton.addEventListener('click', trackApplyConstraints);
 overApplyConstraintsButton.addEventListener('click', overApplyConstraints);
 
+var constraintsValue = document.querySelector('textarea#getConstraints');
+var defaultCon = {
+    frameRate: {
+        max: 15,
+        ideal: 15
+    },
+    aspectRatio: { min: 1.777, max: 1.778},
+    width: {
+        min: 0,
+        ideal: 640,
+        max: 640,
+    },
+    height: {
+        min: 0,
+        ideal: 640,
+        max: 640,
+    }
+};
+constraintsValue.value = JSON.stringify(defaultCon, null, '    ' );
+
+function editGetConstraints() {
+    var constraints = { };
+    if (constraintsValue.value) {
+        constraints = JSON.parse(constraintsValue.value);
+    }
+    return constraints;
+}
+
 
 function trackApplyConstraints() {
-    let constraints = {
-        frameRate: { max: 15, ideal: 15 },
-        aspectRatio: { min: 1.777, max: 1.778},
-        width: {
-            min: 0,
-            ideal: 640,
-            max: 640,
-        },
-        height: {
-            min: 0,
-            ideal: 640,
-            max: 640,
-        }
-    }
-    console.warn("applyConstraints: ", constraints)
+    let constraints = editGetConstraints()
     let track = localStream.getVideoTracks()[0];
     track.applyConstraints(constraints).then(function () {
-        console.log('applyConstraints success')
+        console.warn("applyConstraints success \n" + JSON.stringify(constraints, null, '    ') );
     }).catch(function (error) {
         console.error(error)
     });
@@ -61,7 +75,8 @@ function overApplyConstraints() {
             max: 1080,
         }
     }
-    console.warn("applyConstraints: ", constraints)
+    console.warn("overApplyConstraints \n" + JSON.stringify(constraints, null, '    ') );
+
     let track = localStream.getVideoTracks()[0];
     track.applyConstraints(constraints).then(function () {
         console.log('success')
@@ -123,12 +138,6 @@ async function start() {
     }
 }
 
-function getSelectedSdpSemantics() {
-    const sdpSemanticsSelect = document.querySelector('#sdpSemantics');
-    const option = sdpSemanticsSelect.options[sdpSemanticsSelect.selectedIndex];
-    return option.value === '' ? {} : {sdpSemantics: option.value};
-}
-
 async function call() {
     callButton.disabled = true;
     hangupButton.disabled = false;
@@ -142,7 +151,7 @@ async function call() {
     if (audioTracks.length > 0) {
         console.log(`Using audio device: ${audioTracks[0].label}`);
     }
-    const configuration = getSelectedSdpSemantics();
+    const configuration = {};
     console.log('RTCPeerConnection configuration:', configuration);
     pc1 = new RTCPeerConnection(configuration);
     console.log('Created local peer connection object pc1');
@@ -270,4 +279,5 @@ function hangup() {
     pc2 = null;
     hangupButton.disabled = true;
     callButton.disabled = false;
+    window.location.reload(true)
 }

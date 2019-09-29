@@ -2,10 +2,22 @@
 
 Browser compatibility
 
-|Desktop	| Desktop  |Desktop |Desktop|Desktop|Mobile|Mobile|Mobile|Mobile|Mobile|Mobile|Mobile|Mobile|
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-|--|Chrome|	Edge	|Firefox	|Internet Explorer	|Opera	|Safari	|Android webview	|Chrome for Android	|Edge Mobile|Firefox for Android	|Opera for Android	|Safari on iOS	|Samsung Internet|
-|applyConstraints	|Full support63	|Full support12	|Full support50	|No supportNo	|Full support46|	Full supportYes	|Full support63	|Full support63|	?	|Full support50	|Full support43	|Full supportYes	|Full support7.0|
+## 浏览器支持范围
+
+| IPVT支持浏览器范围       | applyConstraints支持浏览器范围 |
+| ------------------------ | ------------------------------ |
+| IE 11                    | Not Support                    |
+| Firefox 52+              | Firefox 52+                    |
+| Chrome 52+               | Chrome 63+                     |
+| Opera 36+                | Opera 46+                      |
+| Microsoft Edge 40.15063+ | All Support                    |
+| Safari 11+               |                                |
+| MacOS 10+                | _                              |
+| Win 7+                   | _                              |
+| Android 4.1+             | _                              |
+| iOS 9.0+                 | _                              |
 
 
-applyConstraints 各浏览器验证的版本 chrome 64、Firefox 52、safari 12.1.1
+## 使用说明
+
+- 修改 constraints 值进行 applyConstraints 限制，看浏览器是否支持applyConstraints 接口，支持的话是否applyConstraints 成功！
