@@ -24,7 +24,7 @@ overApplyConstraintsButton.addEventListener('click', overApplyConstraints);
 var constraintsValue = document.querySelector('textarea#getConstraints');
 var defaultCon = {
     frameRate: {
-        max: 15,
+        max: 30,
         ideal: 15
     },
     aspectRatio: { min: 1.777, max: 1.778},
@@ -35,8 +35,8 @@ var defaultCon = {
     },
     height: {
         min: 0,
-        ideal: 640,
-        max: 640,
+        ideal: 360,
+        max: 360,
     }
 };
 constraintsValue.value = JSON.stringify(defaultCon, null, '    ' );
