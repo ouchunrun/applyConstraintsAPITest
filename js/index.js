@@ -111,6 +111,22 @@ remoteVideo.addEventListener('resize', () => {
     }
 });
 
+
+var localVideoStatsDiv = document.querySelector('div#localVideoElem');
+var remoteVideoStatsDiv = document.querySelector('div#remoteVideoElem');
+// Display statistics
+setInterval(function() {
+    // Collect some stats from the video tags.
+    if (localVideo.videoWidth) {
+        localVideoStatsDiv.innerHTML = '<strong>Video dimensions:</strong> ' +
+            localVideo.videoWidth + 'x' + localVideo.videoHeight + 'px';
+    }
+    if (remoteVideo.videoWidth) {
+        remoteVideoStatsDiv.innerHTML = '<strong>Video dimensions:</strong> ' +
+            remoteVideo.videoWidth + 'x' + remoteVideo.videoHeight + 'px';
+    }
+}, 1000);
+
 let localStream;
 let pc1;
 let pc2;
@@ -131,7 +147,9 @@ async function start() {
     console.log('Requesting local stream');
     startButton.disabled = true;
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
+        var constraints = {audio: true, video: true}
+        console.warn("getUserMedia \n" + JSON.stringify(constraints, null, '    ') );
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         console.log('Received local stream');
         localVideo.srcObject = stream;
         localStream = stream;
