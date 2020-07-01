@@ -108,11 +108,11 @@ remoteVideo.addEventListener('loadedmetadata', function() {
 });
 
 localVideo.addEventListener('resize', () => {
-    console.warn(`local video size changed to ${localVideo.videoWidth}x${localVideo.videoHeight}`);
+    console.log(`local video size changed to ${localVideo.videoWidth}x${localVideo.videoHeight}`);
 });
 
 remoteVideo.addEventListener('resize', () => {
-    console.warn(`Remote video size changed to ${remoteVideo.videoWidth}x${remoteVideo.videoHeight}`);
+    console.log(`Remote video size changed to ${remoteVideo.videoWidth}x${remoteVideo.videoHeight}`);
     // We'll use the first onsize callback as an indication that video has started
     // playing out.
     if (startTime) {
