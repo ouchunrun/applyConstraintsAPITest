@@ -23,20 +23,23 @@ overApplyConstraintsButton.addEventListener('click', overApplyConstraints);
 
 var constraintsValue = document.querySelector('textarea#getConstraints');
 var defaultCon = {
-    frameRate: {
-        max: 30,
-        ideal: 15
+    "frameRate": {
+        "max": 30,
+        "ideal": 15
     },
-    aspectRatio: { min: 1.777, max: 1.778},
-    width: {
-        min: 0,
-        ideal: 640,
-        max: 640,
+    "aspectRatio": {
+        "min": 1.777,
+        "max": 1.778
     },
-    height: {
-        min: 0,
-        ideal: 360,
-        max: 360,
+    "width": {
+        "min": 0,
+        "ideal": 1280,
+        "max": 1280
+    },
+    "height": {
+        "min": 0,
+        "ideal": 720,
+        "max": 720
     }
 };
 constraintsValue.value = JSON.stringify(defaultCon, null, '    ' );
@@ -53,8 +56,9 @@ function editGetConstraints() {
 function trackApplyConstraints() {
     let constraints = editGetConstraints()
     let track = localStream.getVideoTracks()[0];
+    console.info("applyConstraints success \n" + JSON.stringify(constraints, null, '    ') );
     track.applyConstraints(constraints).then(function () {
-        console.warn("applyConstraints success \n" + JSON.stringify(constraints, null, '    ') );
+        console.warn("applyConstraints by set success");
     }).catch(function (error) {
         console.error(error)
     });
@@ -62,23 +66,30 @@ function trackApplyConstraints() {
 
 function overApplyConstraints() {
     let constraints = {
-        frameRate: { exact: 30, min: 15 },
-        width: {
-            min: 0,
-            exact: 3840,
-            max: 3840,
+        "frameRate": {
+            "max": 30,
+            "ideal": 15
         },
-        height: {
-            min: 0,
-            exact: 2160,
-            max: 2160,
+        "aspectRatio": {
+            "min": 1.777,
+            "max": 1.778
+        },
+        "width": {
+            "min": 0,
+            "ideal": 1920,
+            "max": 1920
+        },
+        "height": {
+            "min": 0,
+            "ideal": 1080,
+            "max": 1080
         }
     }
-    console.warn("overApplyConstraints \n" + JSON.stringify(constraints, null, '    ') );
+    console.info("overApplyConstraints \n" + JSON.stringify(constraints, null, '    ') );
 
     let track = localStream.getVideoTracks()[0];
     track.applyConstraints(constraints).then(function () {
-        console.log('success')
+        console.warn('ApplyConstraints 1080 success')
     }).catch(function (error) {
         console.error(error)
     });
