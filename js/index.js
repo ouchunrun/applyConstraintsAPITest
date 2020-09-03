@@ -11,89 +11,13 @@
 const startButton = document.getElementById('startButton');
 const callButton = document.getElementById('callButton');
 const hangupButton = document.getElementById('hangupButton');
-const applyConstraintsButton = document.getElementById('applyConstraints');
-const overApplyConstraintsButton = document.getElementById('overApplyConstraints');
+
 callButton.disabled = true;
 hangupButton.disabled = true;
 startButton.addEventListener('click', start);
 callButton.addEventListener('click', call);
 hangupButton.addEventListener('click', hangup);
-applyConstraintsButton.addEventListener('click', trackApplyConstraints);
-overApplyConstraintsButton.addEventListener('click', overApplyConstraints);
 
-var constraintsValue = document.querySelector('textarea#getConstraints');
-var defaultCon = {
-    "frameRate": {
-        "max": 30,
-        "ideal": 15
-    },
-    "aspectRatio": {
-        "min": 1.777,
-        "max": 1.778
-    },
-    "width": {
-        "min": 0,
-        "ideal": 1280,
-        "max": 1280
-    },
-    "height": {
-        "min": 0,
-        "ideal": 720,
-        "max": 720
-    }
-};
-constraintsValue.value = JSON.stringify(defaultCon, null, '    ' );
-
-function editGetConstraints() {
-    var constraints = { };
-    if (constraintsValue.value) {
-        constraints = JSON.parse(constraintsValue.value);
-    }
-    return constraints;
-}
-
-
-function trackApplyConstraints() {
-    let constraints = editGetConstraints()
-    let track = localStream.getVideoTracks()[0];
-    console.info("applyConstraints success \n" + JSON.stringify(constraints, null, '    ') );
-    track.applyConstraints(constraints).then(function () {
-        console.warn("applyConstraints by set success");
-    }).catch(function (error) {
-        console.error(error)
-    });
-}
-
-function overApplyConstraints() {
-    let constraints = {
-        "frameRate": {
-            "max": 30,
-            "ideal": 15
-        },
-        "aspectRatio": {
-            "min": 1.777,
-            "max": 1.778
-        },
-        "width": {
-            "min": 0,
-            "ideal": 1920,
-            "max": 1920
-        },
-        "height": {
-            "min": 0,
-            "ideal": 1080,
-            "max": 1080
-        }
-    }
-    console.info("overApplyConstraints \n" + JSON.stringify(constraints, null, '    ') );
-
-    let track = localStream.getVideoTracks()[0];
-    track.applyConstraints(constraints).then(function () {
-        console.warn('ApplyConstraints 1080 success')
-    }).catch(function (error) {
-        console.error(error)
-    });
-}
 
 let startTime;
 const localVideo = document.getElementById('localVideo');
@@ -154,13 +78,36 @@ function getOtherPc(pc) {
     return (pc === pc1) ? pc2 : pc1;
 }
 
+var previewConstraint = {
+    "audio": false,
+    "video": {
+        "frameRate": {
+            "exact": 15
+        },
+        "aspectRatio": {
+            "min": 1.777,
+            "max": 1.778
+        },
+        "width": {
+            "min": 320,
+            "ideal": 640,
+            "max": 640
+        },
+        "height": {
+            "min": 240,
+            "ideal": 360,
+            "max": 360
+        }
+    }
+}
+
 async function start() {
     console.log('Requesting local stream');
     startButton.disabled = true;
     try {
-        var constraints = {audio: true, video: true}
-        console.warn("getUserMedia \n" + JSON.stringify(constraints, null, '    ') );
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        console.warn("getUserMedia \n" + JSON.stringify(previewConstraint, null, '    ') );
+
+        const stream = await navigator.mediaDevices.getUserMedia(previewConstraint);
         console.log('Received local stream');
         localVideo.srcObject = stream;
         localStream = stream;
@@ -169,6 +116,17 @@ async function start() {
         alert(`getUserMedia() error: ${e.name}`);
     }
 }
+
+function shareVideo(){
+    let videoList = document.getElementById('videoList').options
+    if (videoList && videoList.length > 0) {
+        let selectDevice = videoList[videoList.selectedIndex]
+        console.warn("selectDevice: ", selectDevice.label)
+        previewConstraint.video.deviceId = selectDevice.value
+        start()
+    }
+}
+
 
 async function call() {
     callButton.disabled = true;
