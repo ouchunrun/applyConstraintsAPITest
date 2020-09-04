@@ -39,6 +39,10 @@ function editGetConstraints() {
  * applyConstraints 新的分辨率
  */
 function trackApplyConstraints() {
+    if(!localStream){
+        alert("stream is not exist, please click start get stream first!")
+        return
+    }
     let constraints = editGetConstraints()
     let localVideoTrack = localStream.getVideoTracks()[0];
     console.info("applyConstraints \n" + JSON.stringify(constraints, null, '    ') );
@@ -46,13 +50,13 @@ function trackApplyConstraints() {
     function applyNewConstraints(){
         localVideoTrack.applyConstraints(constraints).then(function () {
             console.warn('applyConstraints succeed ' + JSON.stringify(constraints, null, '    '));
-            constraints = getVideoConstraints(constraints, {name: 'OverconstrainedError'})
-            console.warn("constraints: ", constraints)
-            if(constraints){
-                applyNewConstraints()
-            }else {
-                console.warn("applyConstraints 失败！！！")
-            }
+            // constraints = getVideoConstraints(constraints, {name: 'OverconstrainedError'})
+            // console.warn("constraints: ", constraints)
+            // if(constraints){
+            //     applyNewConstraints()
+            // }else {
+            //     console.warn("applyConstraints 失败！！！")
+            // }
         }).catch(function (error) {
             console.error("fail to applyConstraints : " + JSON.stringify(constraints, null, '    '));
             console.error("applyConstraints fail name: " + error.name + " ,constraint " + error.constraint);

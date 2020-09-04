@@ -11,6 +11,7 @@
 const startButton = document.getElementById('startButton');
 const callButton = document.getElementById('callButton');
 const hangupButton = document.getElementById('hangupButton');
+const applyConstraintsBtn = document.getElementById('applyConstraints');
 
 callButton.disabled = true;
 hangupButton.disabled = true;
@@ -112,6 +113,7 @@ async function start() {
         localVideo.srcObject = stream;
         localStream = stream;
         callButton.disabled = false;
+        applyConstraintsBtn.disabled = false;
     } catch (e) {
         alert(`getUserMedia() error: ${e.name}`);
     }
