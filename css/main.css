@@ -207,10 +207,6 @@ div#links a {
     margin: 0 0 1.5em 0;
 }
 
-div.outputSelector {
-    margin: -1.3em 0 2em 0;
-}
-
 p.description {
     margin: 0 0 0.5em 0;
 }
@@ -263,5 +259,4 @@ ul {
         font-size: 20px;
     }
 }
-
 
